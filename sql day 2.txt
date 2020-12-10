@@ -1,0 +1,187 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| practice           |
+| sys                |
++--------------------+
+5 rows in set (0.10 sec)
+
+mysql> use practice;
+Database changed
+mysql> show tables;
++-----------------------------+
+| Tables_in_practice          |
++-----------------------------+
+| building                    |
+| building_type               |
+| electricity_connection_type |
+| electricity_reading         |
+| meter                       |
+| slab                        |
++-----------------------------+
+6 rows in set (0.14 sec)
+
+mysql> select * from electricity_connection_type;
++----+-----------------+
+| id | connection_name |
++----+-----------------+
+|  1 | fan             |
+|  2 | tv              |
+|  3 | ac              |
+|  4 | mobile          |
++----+-----------------+
+4 rows in set (0.11 sec)
+
+mysql> select * from electricity_connection_type order by;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from electricity_connection_type order by id;
++----+-----------------+
+| id | connection_name |
++----+-----------------+
+|  1 | fan             |
+|  2 | tv              |
+|  3 | ac              |
+|  4 | mobile          |
++----+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from building_type order by name;
++----+------+--------------------+
+| id | name | connection_type_id |
++----+------+--------------------+
+|  1 | pvp  |                 21 |
+|  2 | pvr  |                 22 |
++----+------+--------------------+
+2 rows in set (0.29 sec)
+
+mysql> select * from building ORDER BY owner_name ASC;
++----+------------+---------+------------------+----------------+------------------+
+| id | owner_name | address | building_type_id | contact_number | emai_address     |
++----+------------+---------+------------------+----------------+------------------+
+|  2 | geetha     | kld     |                2 | 9966345505     | geetha@gmail.com |
+|  1 | manasa     | atp     |                1 | 9963345505     | manasa@gmail.com |
++----+------------+---------+------------------+----------------+------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from meter;
++----+--------------+-------------+
+| id | meter_number | building_id |
++----+--------------+-------------+
+|  1 | 123          |           1 |
+|  2 | 183          |           2 |
++----+--------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select owner_name,contact_number from building ORDER BY contact_number;
++------------+----------------+
+| owner_name | contact_number |
++------------+----------------+
+| manasa     | 9963345505     |
+| geetha     | 9966345505     |
++------------+----------------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> select * from building where owner_name='Nicholas';
+Empty set (0.00 sec)
+
+mysql> select * from building where owner_name='manasa';
++----+------------+---------+------------------+----------------+------------------+
+| id | owner_name | address | building_type_id | contact_number | emai_address     |
++----+------------+---------+------------------+----------------+------------------+
+|  1 | manasa     | atp     |                1 | 9963345505     | manasa@gmail.com |
++----+------------+---------+------------------+----------------+------------------+
+1 row in set (0.00 sec)
+
+mysql>  mysql>  select total_units,payable_amount,fine_amount from bill ORDER BY total_units DESC;
++-------------+----------------+-------------+
+| total_units | payable_amount | fine_amount |
++-------------+----------------+-------------+
+|           6 |           1000 |         900 |
+|           6 |           1200 |         800 |
+|           4 |           1500 |        1000 |
+|           3 |            900 |        7500 |
++-------------+----------------+-------------+
+4 rows in set (0.03 sec)
+
+mysql> select * from bill where total_units>1000;
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+| id | meter_id | month | year | due_date   | total_units | payable_amount | is_payed | payment_date | fine_amount |
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+|  5 |        1 |     8 | 2002 | 2002-07-20 |      100000 |           1100 |      110 | 2002-05-20   |        5500 |
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+1 row in set (0.05 sec)
+
+mysql> select * from bill where due_date='2017-10-01' ORDER BY payable_amount DESC;
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+| id | meter_id | month | year | due_date   | total_units | payable_amount | is_payed | payment_date | fine_amount |
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+|  2 |        1 |     9 | 2001 | 2017-10-01 |           4 |           1500 |      125 | 2001-08-20   |        1000 |
+|  3 |        2 |    11 | 2001 | 2017-10-01 |           6 |           1200 |      120 | 2001-09-20   |         800 |
+|  4 |        2 |    11 | 2001 | 2017-10-01 |           3 |            900 |       90 | 2000-11-20   |        7500 |
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+3 rows in set (0.06 sec)
+
+
+mysql> select * from building where email_address='' ORDER BY owner_name ASC;
++----+------------+---------+------------------+----------------+---------------+
+| id | owner_name | address | building_type_id | contact_number | email_address |
++----+------------+---------+------------------+----------------+---------------+
+|  5 | ramesh     | pune    |                1 | 9782647829     |               |
++----+------------+---------+------------------+----------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from building where owner_name LIKE 'm%' ORDER BY owner_name ASC;
++----+------------+---------+------------------+----------------+---------------+
+| id | owner_name | address | building_type_id | contact_number | email_address |
++----+------------+---------+------------------+----------------+---------------+
+|  1 | manasa     | chennai |                2 | 983627         | mah@abc.in    |
+|---+------------+---------+------------------+----------------+---------------+
+1 row in set (0.05 sec)
+
+mysql> select * from building where building_type_id=2 ORDER BY owner_name ASC;
++----+------------+---------+------------------+----------------+---------------+
+| id | owner_name | address | building_type_id | contact_number | email_address |
++----+------------+---------+------------------+----------------+---------------+
+|  1 | manasa     | chennai |                2 | 99633455057         | manasaboya33@gmail.com   |
++----+------------+---------+------------------+----------------+---------------+
+2 rows in set (0.07 sec)
+
+
+mysql> select * from slab ORDER BY from_unit ASC;
++----+--------------------+-----------+---------+------+
+| id | connection_type_id | from_unit | to_unit | rate |
++----+--------------------+-----------+---------+------+
+|  1 |                 11 |       100 |      10 |   50 |
+|  4 |                 14 |       250 |    1100 |  800 |
+|  2 |                 12 |       300 |    1000 |  300 |
+|  3 |                 13 |       400 |     900 |  400 |
++----+--------------------+-----------+---------+------+
+4 rows in set (0.10 sec)
+
+
+mysql> select * from electricity_reading where total_unit between 500 and 1000;
+
+
+mysql> select meter_id,total_unit from electricity_reading where h13>h14 ORDER BY total_unit DESC;
+
+
+
+
