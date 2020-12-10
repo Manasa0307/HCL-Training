@@ -1,0 +1,118 @@
+1)mysql> select avg(h8) as 8th_hour_consumption from  electricity_reading;
++----------------------+
+| 8th_hour_consumption |
++----------------------+
+|               5.0000 |
++----------------------+
+1 row in set (0.04 sec)
+2)mysql> insert into bill values(2,122,9,2020,'2020-12-15',60,20000,6000,'2020-12-11',2000.00);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from bill;
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+| id | meter_id | month | year | due_date   | total_units | payable_amount | i6_payed | payment_date | fine_amount |
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+|  1 |      123 |     7 | 2020 | 2020-12-14 |          50 |          10000 |     5000 | 2020-12-10   |       20000 |
+|  2 |      122 |     9 | 2020 | 2020-12-15 |          60 |          20000 |     6000 | 2020-12-11   |        2000 |
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+2 rows in set (0.00 sec)
+
+3)mysql> select avg(payable_amount) as average_payable_amount from bill where payable_amount>1000;
++------------------------+
+| average_payable_amount |
++------------------------+
+|                  15000 |
++------------------------+
+1 row in set (0.02 sec)
+
+mysql> select avg(payable_amount) as average_payable_amount from bill where payable_amount>10000;
++------------------------+
+| average_payable_amount |
++------------------------+
+|                  20000 |
++------------------------+
+1 row in set (0.00 sec)
+4)mysql> select avg(fine_amount) as average_fine_amount from bill where (extract(year from payment_date))=2018 ;
++---------------------+
+| average_fine_amount |
++---------------------+
+|                NULL |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(fine_amount) as average_fine_amount from bill where (extract(year from payment_date))=2020 ;
++---------------------+
+| average_fine_amount |
++---------------------+
+|               11000 |
++---------------------+
+1 row in set (0.00 sec)
+
+5)mysql> select sum(payable_amount) as sum_payable_amount from bill;
++--------------------+
+| sum_payable_amount |
++--------------------+
+|              30000 |
++--------------------+
+1 row in set (0.00 sec)
+mysql> select * from bill;
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+| id | meter_id | month | year | due_date   | total_units | payable_amount | i6_payed | payment_date | fine_amount |
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+|  1 |      123 |     7 | 2020 | 2021-12-12 |          50 |          10000 |     5000 | 2020-12-10   |       20000 |
+|  2 |      122 |     9 | 2020 | 2021-11-14 |          60 |          20000 |     6000 | 2020-12-11   |        2000 |
++----+----------+-------+------+------------+-------------+----------------+----------+--------------+-------------+
+2 rows in set (0.00 sec)
+
+6)mysql> select sum(payable_amount) as sum_payable_amount from bill where due_date<'2017-10-01';
++--------------------+
+| sum_payable_amount |
++--------------------+
+|               NULL |
++--------------------+
+1 row in set (0.11 sec)
+
+7)mysql> select sum(payable_amount) as sum_payable_amount from bill where due_date>'2017-10-01';
++--------------------+
+| sum_payable_amount |
++--------------------+
+|              30000 |
++--------------------+
+1 row in set (0.00 sec)
+8)mysql> select fine_amount as second_min_fine_amount from bill having fine_amount>(min(fine_amount));
++------------------------+
+| second_min_fine_amount |
++------------------------+
+|                  20000 |
++------------------------+
+1 row in set (0.00 sec)
++----------------+--------+------+-----+---------+-------+
+| Field          | Type   | Null | Key | Default | Extra |
++----------------+--------+------+-----+---------+-------+
+| id             | int    | NO   | PRI | NULL    |       |
+| meter_id       | int    | NO   |     | NULL    |       |
+| month          | int    | NO   |     | NULL    |       |
+| year           | int    | NO   |     | NULL    |       |
+| due_date       | date   | NO   |     | NULL    |       |
+| total_units    | int    | NO   |     | NULL    |       |
+| payable_amount | double | NO   |     | NULL    |       |
+| i6_payed       | int    | NO   |     | NULL    |       |
+| payment_date   | date   | YES  |     | NULL    |       |
+| fine_amount    | double | YES  |     | NULL    |       |
++----------------+--------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+10)mysql> select stddev(fine_amount) as standard_deviation_amount from bill where extract(year from payment_date)=2018;
++---------------------------+
+| standard_deviation_amount |
++---------------------------+
+|                      NULL |
++---------------------------+
+1 row in set (0.00 sec)
+
+mysql> select stddev(fine_amount) as standard_deviation_amount from bill where extract(year from payment_date)=2020;
++---------------------------+
+| standard_deviation_amount |
++---------------------------+
+|                      9000 |
++---------------------------+
+1 row in set (0.00 sec)
