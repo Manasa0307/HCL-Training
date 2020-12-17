@@ -1,0 +1,36 @@
+
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+public class Httpdemo extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter pw=response.getWriter();
+		pw.println("<h1>hello supraja</h1>");
+		pw.close();
+			}
+}
+
+	
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Httpdemoproject</display-name>
+<servlet>  
+		<servlet-name>manasa</servlet-name>  
+		<servlet-class>Httpdemo</servlet-class>  
+		</servlet>  
+		  
+		<servlet-mapping>  
+		<servlet-name>manasa</servlet-name>  
+		<url-pattern>/hi</url-pattern>  
+		</servlet-mapping>  
+</web-app>
