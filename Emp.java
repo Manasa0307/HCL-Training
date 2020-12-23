@@ -1,29 +1,19 @@
-package com.src.model;
-
-import java.util.Date;
+package com.src;
 
 public class Emp {
 	private int eno;
 	private String name;
-	private String address;
-	private int sal;
-	private String designation;
-	private int exp;
-	private Date doj;
+	private Address address;
 
 	public Emp() {
-// TODO Auto-generated constructor stub
+		super();
 	}
 
-	public Emp(int eno, String name, String address, int sal, String designation, int exp, Date doj) {
+	public Emp(int eno, String name, Address address) {
 		super();
 		this.eno = eno;
 		this.name = name;
 		this.address = address;
-		this.sal = sal;
-		this.designation = designation;
-		this.exp = exp;
-		this.doj = doj;
 	}
 
 	public int getEno() {
@@ -42,43 +32,12 @@ public class Emp {
 		this.name = name;
 	}
 
-	public String getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 
-	public int getSal() {
-		return sal;
-	}
-
-	public void setSal(int sal) {
-		this.sal = sal;
-	}
-
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
-	}
-
-	public int getExp() {
-		return exp;
-	}
-
-	public void setExp(int exp) {
-		this.exp = exp;
-	}
-
-	public Date getDoj() {
-		return doj;
-	}
-
-	public void setDoj(Date doj) {
-		this.doj = doj;
-	}
 }
